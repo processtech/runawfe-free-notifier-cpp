@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="RtnResources.cpp" />
+    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="ws\stdsoap2.cpp">
+      <Filter>ws</Filter>
+    </ClCompile>
+    <ClCompile Include="Connector.cpp" />
+    <ClCompile Include="ws\ServerAPIBindingProxy.cpp">
+      <Filter>ws</Filter>
+    </ClCompile>
+    <ClCompile Include="ws\soapC.cpp">
+      <Filter>ws</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginForm.cpp" />
+    <ClCompile Include="RtnCredentials.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="RtnResources.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="ws\stdsoap2.h">
+      <Filter>ws</Filter>
+    </ClInclude>
+    <ClInclude Include="Connector.h" />
+    <ClInclude Include="ws\ServerAPIBindingProxy.h">
+      <Filter>ws</Filter>
+    </ClInclude>
+    <ClInclude Include="ws\soapH.h">
+      <Filter>ws</Filter>
+    </ClInclude>
+    <ClInclude Include="ws\soapStub.h">
+      <Filter>ws</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginForm.h" />
+    <ClInclude Include="RtnCredentials.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{c993b0fa-cc6b-465d-b80b-f4e4b34e52f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ws">
+      <UniqueIdentifier>{17b6fb8e-e59a-4e32-9f6b-d62dff20a8cc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="application.properties">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="rtn.app.ico">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="ws\ServerAPIBinding.nsmap">
+      <Filter>ws</Filter>
+    </None>
+    <None Include="rtn.connected.has.new.tasks.ico">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="rtn.error.ico">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="rtn.initializing.ico">
+      <Filter>Resources</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="rtn.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

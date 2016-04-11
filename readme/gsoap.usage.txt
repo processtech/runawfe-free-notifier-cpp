@@ -1,0 +1,3 @@
+wsdl2h -s http://rtwf:8888/runawfe-wfe-service-4.1.1-SNAPSHOT/AuthenticationServiceBean?wsdl http://rtwf:8888/runawfe-wfe-service-4.1.1-SNAPSHOT/ExecutionServiceBean?wsdl -o ServerAPI.h
+
+soapcpp2 -C -L -w -x -j ServerAPI.h
