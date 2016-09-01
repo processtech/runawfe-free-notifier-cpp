@@ -20,7 +20,7 @@ private:
 	wstring* taskNames;
 public:
 	State(ConnectionState connectionState);
-	State(ns1__getTasksResponse* response);
+	State(ns1__getMyTasksResponse* response);
 	~State();
 	ConnectionState GetConnectionState();
 	int GetTotalTasksCount();

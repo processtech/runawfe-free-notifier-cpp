@@ -12,7 +12,7 @@ Server::State::State(ConnectionState connectionState) {
 	this->taskNames = NULL;
 }
 
-Server::State::State(ns1__getTasksResponse* response) {
+Server::State::State(ns1__getMyTasksResponse* response) {
 	this->connectionState = CONNECTION_STATE_CONNECTED;
 	this->unreadTasksCount = 0;
 	this->totalTasksCount = response->__sizeresult;
@@ -172,38 +172,38 @@ ns1__user* Server::Connector::AuthenticateByLoginAndPassword() {
 	swprintf(passBuffer,appCredentials->getPassword().length()+1,L"%s",appCredentials->getPassword().c_str());
 	request.name = loginBuffer;
 	request.password = passBuffer;
-	string authenticationUrl = IO::ToString(RtnResources::GetWebServiceURL(serverType, serverVersion, L"Authentication"));
-	ServerAPIBindingProxy authProxy(authenticationUrl.c_str());
+	string authServiceUrl = IO::ToString(RtnResources::GetWebServiceURL(serverType, serverVersion, L"Authentication"));
+	ServerAPIBindingProxy authServiceProxy(authServiceUrl.c_str());
 	ns1__authenticateByLoginPasswordResponse response;
-	int result = authProxy.authenticateByLoginPassword(&request, &response);
+	int result = authServiceProxy.authenticateByLoginPassword(&request, &response);
     if (result == SOAP_OK) {
         LOG_DEBUG("call AuthenticateByKerberos completed");
 		return response.result;
     } else {
-		LOG_ERROR("call AuthenticateByKerberos failed by '%s'", authenticationUrl.c_str());
-		Logger::LogWebServiceError(&authProxy);
+		LOG_ERROR("call AuthenticateByKerberos failed by '%s'", authServiceUrl.c_str());
+		Logger::LogWebServiceError(&authServiceProxy);
 		return NULL;
 	}
 }
 
 Server::State* Server::Connector::GetTasks() {
-	LOG_DEBUG("call GetTasks ...");
-	ns1__getTasks request;	
-	string executionUrl = IO::ToString(RtnResources::GetWebServiceURL(serverType, serverVersion, L"Execution"));
-	ServerAPIBindingProxy executionProxy(executionUrl.c_str());
+	LOG_DEBUG("call GetMyTasks ...");
+	ns1__getMyTasks request;	
+	string taskServiceUrl = IO::ToString(RtnResources::GetWebServiceURL(serverType, serverVersion, L"Task"));
+	ServerAPIBindingProxy taskServiceProxy(taskServiceUrl.c_str());
 	request.user = user;	
-	ns1__getTasksResponse response;
-	int result = executionProxy.getTasks(&request, &response);
+	ns1__getMyTasksResponse response;
+	int result = taskServiceProxy.getMyTasks(&request, &response);
 	State* state;
     if (result == SOAP_OK) {
-        LOG_DEBUG("call GetTasks completed");
+        LOG_DEBUG("call GetMyTasks completed");
 		state = new Server::State(&response);
     } else {
-		LOG_ERROR("call GetTasks failed by url '%s'", executionUrl.c_str());
-		Logger::LogWebServiceError(&executionProxy);
+		LOG_ERROR("call GetMyTasks failed by url '%s'", taskServiceUrl.c_str());
+		Logger::LogWebServiceError(&taskServiceProxy);
 		state = new Server::State(CONNECTION_STATE_ERROR);
 	}
-	executionProxy.destroy();
+	taskServiceProxy.destroy();
 	return state;
 }
 

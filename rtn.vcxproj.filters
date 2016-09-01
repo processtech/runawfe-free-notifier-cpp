@@ -69,6 +69,7 @@
     <None Include="rtn.initializing.ico">
       <Filter>Resources</Filter>
     </None>
+    <None Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="rtn.rc">

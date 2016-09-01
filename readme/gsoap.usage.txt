@@ -1,3 +1,9 @@
-wsdl2h -s http://rtwf:8888/runawfe-wfe-service-4.1.1-SNAPSHOT/AuthenticationServiceBean?wsdl http://rtwf:8888/runawfe-wfe-service-4.1.1-SNAPSHOT/ExecutionServiceBean?wsdl -o ServerAPI.h
+wsdl2h -s http://localhost:8080/wfe-service-4.3.0-SNAPSHOT/AuthenticationWebService/AuthenticationAPI?wsdl http://localhost:8080/wfe-service-4.3.0-SNAPSHOT/TaskWebService/TaskAPI?wsdl -o ServerAPI.h
 
 soapcpp2 -C -L -w -x -j ServerAPI.h
+
+Change:
+* soapAuthenticationWebServiceSoapBindingProxy -> ServerAPIBindingProxy
+* AuthenticationWebServiceSoapBindingProxy -> ServerAPIBindingProxy
+
+Добавить #include "stdafx.h" в soapC.cpp, ServerAPIBindingProxy.cpp

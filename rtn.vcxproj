@@ -170,6 +170,7 @@
     <ClInclude Include="ws\stdsoap2.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitignore" />
     <None Include="application.properties" />
     <None Include="rtn.app.ico" />
     <None Include="rtn.connected.has.new.tasks.ico" />
