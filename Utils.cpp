@@ -320,6 +320,9 @@ wstring IO::GetServerTypeByUrl(const string& url) {
 	}
     closesocket(clientSocket);
     WSACleanup();
+	if (version.empty()) {
+		version="jboss7";
+	}	
 	if (!version.empty()) {
 		return ToWideString(version);
 	}	

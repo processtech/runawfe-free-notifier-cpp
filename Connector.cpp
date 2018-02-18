@@ -15,7 +15,7 @@ Server::State::State(ConnectionState connectionState) {
 Server::State::State(ns1__getMyTasksResponse* response) {
 	this->connectionState = CONNECTION_STATE_CONNECTED;
 	this->unreadTasksCount = 0;
-	this->totalTasksCount = response->__sizeresult;
+	this->totalTasksCount = response->result.size();
 	this->taskIds = new LONG64[totalTasksCount];
 	this->taskNames = new wstring[totalTasksCount];
 	for (int i = 0; i < totalTasksCount; i++) {
@@ -151,7 +151,7 @@ ns1__user* Server::Connector::AuthenticateByKerberos() {
 	ns1__authenticateByKerberosResponse response;
 	string authenticationUrl = IO::ToString(RtnResources::GetWebServiceURL(serverType, serverVersion, L"Authentication"));
 	ServerAPIBindingProxy authProxy(authenticationUrl.c_str());
-	int result = authProxy.authenticateByKerberos(&request, &response);
+	int result = authProxy.authenticateByKerberos(&request, response);
     if (result == SOAP_OK) {
         LOG_DEBUG("call AuthenticateByKerberos completed");
 		return response.result;
@@ -175,7 +175,7 @@ ns1__user* Server::Connector::AuthenticateByLoginAndPassword() {
 	string authServiceUrl = IO::ToString(RtnResources::GetWebServiceURL(serverType, serverVersion, L"Authentication"));
 	ServerAPIBindingProxy authServiceProxy(authServiceUrl.c_str());
 	ns1__authenticateByLoginPasswordResponse response;
-	int result = authServiceProxy.authenticateByLoginPassword(&request, &response);
+	int result = authServiceProxy.authenticateByLoginPassword(&request, response);
     if (result == SOAP_OK) {
         LOG_DEBUG("call AuthenticateByKerberos completed");
 		return response.result;
@@ -193,7 +193,7 @@ Server::State* Server::Connector::GetTasks() {
 	ServerAPIBindingProxy taskServiceProxy(taskServiceUrl.c_str());
 	request.user = user;	
 	ns1__getMyTasksResponse response;
-	int result = taskServiceProxy.getMyTasks(&request, &response);
+	int result = taskServiceProxy.getMyTasks(&request, response);
 	State* state;
     if (result == SOAP_OK) {
         LOG_DEBUG("call GetMyTasks completed");

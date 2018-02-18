@@ -13,107 +13,114 @@ compiling, linking, and/or using OpenSSL is allowed.
 #include "soapH.h"
 
 class SOAP_CMAC ServerAPIBindingProxy
-{ public:
-	struct soap *soap;
-	bool own;
-	/// Endpoint URL of service 'ServerAPIBindingProxy' (change as needed)
-	const char *soap_endpoint;
-	/// Constructor
-	ServerAPIBindingProxy();
-	/// Constructor to use/share an engine state
-	ServerAPIBindingProxy(struct soap*);
-	/// Constructor with endpoint URL
-	ServerAPIBindingProxy(const char *url);
-	/// Constructor with engine input+output mode control
-	ServerAPIBindingProxy(soap_mode iomode);
-	/// Constructor with URL and input+output mode control
-	ServerAPIBindingProxy(const char *url, soap_mode iomode);
-	/// Constructor with engine input and output mode control
-	ServerAPIBindingProxy(soap_mode imode, soap_mode omode);
-	/// Destructor frees deserialized data
-	virtual	~ServerAPIBindingProxy();
-	/// Initializer used by constructors
-	virtual	void ServerAPIBindingProxy_init(soap_mode imode, soap_mode omode);
-	/// Delete all deserialized data (with soap_destroy and soap_end)
-	virtual	void destroy();
-	/// Delete all deserialized data and reset to default
-	virtual	void reset();
-	/// Disables and removes SOAP Header from message
-	virtual	void soap_noheader();
-	/// Get SOAP Header structure (NULL when absent)
-	virtual	const SOAP_ENV__Header *soap_header();
-	/// Get SOAP Fault structure (NULL when absent)
-	virtual	const SOAP_ENV__Fault *soap_fault();
-	/// Get SOAP Fault string (NULL when absent)
-	virtual	const char *soap_fault_string();
-	/// Get SOAP Fault detail as string (NULL when absent)
-	virtual	const char *soap_fault_detail();
-	/// Close connection (normally automatic, except for send_X ops)
-	virtual	int soap_close_socket();
-	/// Force close connection (can kill a thread blocked on IO)
-	virtual	int soap_force_close_socket();
-	/// Print fault
-	virtual	void soap_print_fault(FILE*);
-#ifndef WITH_LEAN
-	/// Print fault to stream
-#ifndef WITH_COMPAT
-	virtual	void soap_stream_fault(std::ostream&);
-#endif
-
-	/// Put fault into buffer
-	virtual	char *soap_sprint_fault(char *buf, size_t len);
-#endif
-
-	/// Web service operation 'authenticateByKerberos' (returns error code or SOAP_OK)
-	virtual	int authenticateByKerberos(ns1__authenticateByKerberos *ns1__authenticateByKerberos_, ns1__authenticateByKerberosResponse *ns1__authenticateByKerberosResponse_) { return this->authenticateByKerberos(NULL, NULL, ns1__authenticateByKerberos_, ns1__authenticateByKerberosResponse_); }
-	virtual	int authenticateByKerberos(const char *endpoint, const char *soap_action, ns1__authenticateByKerberos *ns1__authenticateByKerberos_, ns1__authenticateByKerberosResponse *ns1__authenticateByKerberosResponse_);
-
-	/// Web service operation 'authenticateByLoginPassword' (returns error code or SOAP_OK)
-	virtual	int authenticateByLoginPassword(ns1__authenticateByLoginPassword *ns1__authenticateByLoginPassword_, ns1__authenticateByLoginPasswordResponse *ns1__authenticateByLoginPasswordResponse_) { return this->authenticateByLoginPassword(NULL, NULL, ns1__authenticateByLoginPassword_, ns1__authenticateByLoginPasswordResponse_); }
-	virtual	int authenticateByLoginPassword(const char *endpoint, const char *soap_action, ns1__authenticateByLoginPassword *ns1__authenticateByLoginPassword_, ns1__authenticateByLoginPasswordResponse *ns1__authenticateByLoginPasswordResponse_);
-
-	/// Web service operation 'authenticateByTrustedPrincipal' (returns error code or SOAP_OK)
-	virtual	int authenticateByTrustedPrincipal(ns1__authenticateByTrustedPrincipal *ns1__authenticateByTrustedPrincipal_, ns1__authenticateByTrustedPrincipalResponse *ns1__authenticateByTrustedPrincipalResponse_) { return this->authenticateByTrustedPrincipal(NULL, NULL, ns1__authenticateByTrustedPrincipal_, ns1__authenticateByTrustedPrincipalResponse_); }
-	virtual	int authenticateByTrustedPrincipal(const char *endpoint, const char *soap_action, ns1__authenticateByTrustedPrincipal *ns1__authenticateByTrustedPrincipal_, ns1__authenticateByTrustedPrincipalResponse *ns1__authenticateByTrustedPrincipalResponse_);
-
-	/// Web service operation 'authenticateByCallerPrincipal' (returns error code or SOAP_OK)
-	virtual	int authenticateByCallerPrincipal(ns1__authenticateByCallerPrincipal *ns1__authenticateByCallerPrincipal_, ns1__authenticateByCallerPrincipalResponse *ns1__authenticateByCallerPrincipalResponse_) { return this->authenticateByCallerPrincipal(NULL, NULL, ns1__authenticateByCallerPrincipal_, ns1__authenticateByCallerPrincipalResponse_); }
-	virtual	int authenticateByCallerPrincipal(const char *endpoint, const char *soap_action, ns1__authenticateByCallerPrincipal *ns1__authenticateByCallerPrincipal_, ns1__authenticateByCallerPrincipalResponse *ns1__authenticateByCallerPrincipalResponse_);
-
-	/// Web service operation 'getMyTasks' (returns error code or SOAP_OK)
-	virtual	int getMyTasks(ns1__getMyTasks *ns1__getMyTasks_, ns1__getMyTasksResponse *ns1__getMyTasksResponse_) { return this->getMyTasks(NULL, NULL, ns1__getMyTasks_, ns1__getMyTasksResponse_); }
-	virtual	int getMyTasks(const char *endpoint, const char *soap_action, ns1__getMyTasks *ns1__getMyTasks_, ns1__getMyTasksResponse *ns1__getMyTasksResponse_);
-
-	/// Web service operation 'markTaskOpened' (returns error code or SOAP_OK)
-	virtual	int markTaskOpened(ns1__markTaskOpened *ns1__markTaskOpened_, ns1__markTaskOpenedResponse *ns1__markTaskOpenedResponse_) { return this->markTaskOpened(NULL, NULL, ns1__markTaskOpened_, ns1__markTaskOpenedResponse_); }
-	virtual	int markTaskOpened(const char *endpoint, const char *soap_action, ns1__markTaskOpened *ns1__markTaskOpened_, ns1__markTaskOpenedResponse *ns1__markTaskOpenedResponse_);
-
-	/// Web service operation 'reassignTask' (returns error code or SOAP_OK)
-	virtual	int reassignTask(ns1__reassignTask *ns1__reassignTask_, ns1__reassignTaskResponse *ns1__reassignTaskResponse_) { return this->reassignTask(NULL, NULL, ns1__reassignTask_, ns1__reassignTaskResponse_); }
-	virtual	int reassignTask(const char *endpoint, const char *soap_action, ns1__reassignTask *ns1__reassignTask_, ns1__reassignTaskResponse *ns1__reassignTaskResponse_);
-
-	/// Web service operation 'reassignTasks' (returns error code or SOAP_OK)
-	virtual	int reassignTasks(ns1__reassignTasks *ns1__reassignTasks_, ns1__reassignTasksResponse *ns1__reassignTasksResponse_) { return this->reassignTasks(NULL, NULL, ns1__reassignTasks_, ns1__reassignTasksResponse_); }
-	virtual	int reassignTasks(const char *endpoint, const char *soap_action, ns1__reassignTasks *ns1__reassignTasks_, ns1__reassignTasksResponse *ns1__reassignTasksResponse_);
-
-	/// Web service operation 'getTasks' (returns error code or SOAP_OK)
-	virtual	int getTasks(ns1__getTasks *ns1__getTasks_, ns1__getTasksResponse *ns1__getTasksResponse_) { return this->getTasks(NULL, NULL, ns1__getTasks_, ns1__getTasksResponse_); }
-	virtual	int getTasks(const char *endpoint, const char *soap_action, ns1__getTasks *ns1__getTasks_, ns1__getTasksResponse *ns1__getTasksResponse_);
-
-	/// Web service operation 'completeTaskWS' (returns error code or SOAP_OK)
-	virtual	int completeTaskWS(ns1__completeTaskWS *ns1__completeTaskWS_, ns1__completeTaskWSResponse *ns1__completeTaskWSResponse_) { return this->completeTaskWS(NULL, NULL, ns1__completeTaskWS_, ns1__completeTaskWSResponse_); }
-	virtual	int completeTaskWS(const char *endpoint, const char *soap_action, ns1__completeTaskWS *ns1__completeTaskWS_, ns1__completeTaskWSResponse *ns1__completeTaskWSResponse_);
-
-	/// Web service operation 'getProcessTasks' (returns error code or SOAP_OK)
-	virtual	int getProcessTasks(ns1__getProcessTasks *ns1__getProcessTasks_, ns1__getProcessTasksResponse *ns1__getProcessTasksResponse_) { return this->getProcessTasks(NULL, NULL, ns1__getProcessTasks_, ns1__getProcessTasksResponse_); }
-	virtual	int getProcessTasks(const char *endpoint, const char *soap_action, ns1__getProcessTasks *ns1__getProcessTasks_, ns1__getProcessTasksResponse *ns1__getProcessTasksResponse_);
-
-	/// Web service operation 'assignTask' (returns error code or SOAP_OK)
-	virtual	int assignTask(ns1__assignTask *ns1__assignTask_, ns1__assignTaskResponse *ns1__assignTaskResponse_) { return this->assignTask(NULL, NULL, ns1__assignTask_, ns1__assignTaskResponse_); }
-	virtual	int assignTask(const char *endpoint, const char *soap_action, ns1__assignTask *ns1__assignTask_, ns1__assignTaskResponse *ns1__assignTaskResponse_);
-
-	/// Web service operation 'getTask' (returns error code or SOAP_OK)
-	virtual	int getTask(ns1__getTask *ns1__getTask_, ns1__getTaskResponse *ns1__getTaskResponse_) { return this->getTask(NULL, NULL, ns1__getTask_, ns1__getTaskResponse_); }
-	virtual	int getTask(const char *endpoint, const char *soap_action, ns1__getTask *ns1__getTask_, ns1__getTaskResponse *ns1__getTaskResponse_);
-};
+{      public:
+        /// Context to manage proxy IO and data
+        struct soap *soap;
+        bool soap_own; ///< flag indicating that this context is owned by this proxy when context is shared
+        /// Endpoint URL of service 'ServerAPIBindingProxy' (change as needed)
+        const char *soap_endpoint;
+        /// Variables globally declared in ServerAPI.h, if any
+        /// Construct a proxy with new managing context
+        ServerAPIBindingProxy();
+        /// Copy constructor
+        ServerAPIBindingProxy(const ServerAPIBindingProxy& rhs);
+        /// Construct proxy given a shared managing context
+        ServerAPIBindingProxy(struct soap*);
+        /// Constructor taking an endpoint URL
+        ServerAPIBindingProxy(const char *endpoint);
+        /// Constructor taking input and output mode flags for the new managing context
+        ServerAPIBindingProxy(soap_mode iomode);
+        /// Constructor taking endpoint URL and input and output mode flags for the new managing context
+        ServerAPIBindingProxy(const char *endpoint, soap_mode iomode);
+        /// Constructor taking input and output mode flags for the new managing context
+        ServerAPIBindingProxy(soap_mode imode, soap_mode omode);
+        /// Destructor deletes non-shared managing context only (use destroy() to delete deserialized data)
+        virtual ~ServerAPIBindingProxy();
+        /// Initializer used by constructors
+        virtual void ServerAPIBindingProxy_init(soap_mode imode, soap_mode omode);
+        /// Return a copy that has a new managing context with the same engine state
+        virtual ServerAPIBindingProxy *copy();
+        /// Copy assignment
+        ServerAPIBindingProxy& operator=(const ServerAPIBindingProxy&);
+        /// Delete all deserialized data (uses soap_destroy() and soap_end())
+        virtual void destroy();
+        /// Delete all deserialized data and reset to default
+        virtual void reset();
+        /// Disables and removes SOAP Header from message by setting soap->header = NULL
+        virtual void soap_noheader();
+        /// Get SOAP Header structure (i.e. soap->header, which is NULL when absent)
+        virtual ::SOAP_ENV__Header *soap_header();
+        /// Get SOAP Fault structure (i.e. soap->fault, which is NULL when absent)
+        virtual ::SOAP_ENV__Fault *soap_fault();
+        /// Get SOAP Fault string (NULL when absent)
+        virtual const char *soap_fault_string();
+        /// Get SOAP Fault detail as string (NULL when absent)
+        virtual const char *soap_fault_detail();
+        /// Close connection (normally automatic, except for send_X ops)
+        virtual int soap_close_socket();
+        /// Force close connection (can kill a thread blocked on IO)
+        virtual int soap_force_close_socket();
+        /// Print fault
+        virtual void soap_print_fault(FILE*);
+    #ifndef WITH_LEAN
+    #ifndef WITH_COMPAT
+        /// Print fault to stream
+        virtual void soap_stream_fault(std::ostream&);
+    #endif
+        /// Write fault to buffer
+        virtual char *soap_sprint_fault(char *buf, size_t len);
+    #endif
+        /// Web service operation 'authenticateByCallerPrincipal' (returns SOAP_OK or error code)
+        virtual int authenticateByCallerPrincipal(ns1__authenticateByCallerPrincipal *ns1__authenticateByCallerPrincipal_, ns1__authenticateByCallerPrincipalResponse &ns1__authenticateByCallerPrincipalResponse_)
+        { return this->authenticateByCallerPrincipal(NULL, NULL, ns1__authenticateByCallerPrincipal_, ns1__authenticateByCallerPrincipalResponse_); }
+        virtual int authenticateByCallerPrincipal(const char *soap_endpoint, const char *soap_action, ns1__authenticateByCallerPrincipal *ns1__authenticateByCallerPrincipal_, ns1__authenticateByCallerPrincipalResponse &ns1__authenticateByCallerPrincipalResponse_);
+        /// Web service operation 'authenticateByLoginPassword' (returns SOAP_OK or error code)
+        virtual int authenticateByLoginPassword(ns1__authenticateByLoginPassword *ns1__authenticateByLoginPassword_, ns1__authenticateByLoginPasswordResponse &ns1__authenticateByLoginPasswordResponse_)
+        { return this->authenticateByLoginPassword(NULL, NULL, ns1__authenticateByLoginPassword_, ns1__authenticateByLoginPasswordResponse_); }
+        virtual int authenticateByLoginPassword(const char *soap_endpoint, const char *soap_action, ns1__authenticateByLoginPassword *ns1__authenticateByLoginPassword_, ns1__authenticateByLoginPasswordResponse &ns1__authenticateByLoginPasswordResponse_);
+        /// Web service operation 'authenticateByTrustedPrincipal' (returns SOAP_OK or error code)
+        virtual int authenticateByTrustedPrincipal(ns1__authenticateByTrustedPrincipal *ns1__authenticateByTrustedPrincipal_, ns1__authenticateByTrustedPrincipalResponse &ns1__authenticateByTrustedPrincipalResponse_)
+        { return this->authenticateByTrustedPrincipal(NULL, NULL, ns1__authenticateByTrustedPrincipal_, ns1__authenticateByTrustedPrincipalResponse_); }
+        virtual int authenticateByTrustedPrincipal(const char *soap_endpoint, const char *soap_action, ns1__authenticateByTrustedPrincipal *ns1__authenticateByTrustedPrincipal_, ns1__authenticateByTrustedPrincipalResponse &ns1__authenticateByTrustedPrincipalResponse_);
+        /// Web service operation 'authenticateByKerberos' (returns SOAP_OK or error code)
+        virtual int authenticateByKerberos(ns1__authenticateByKerberos *ns1__authenticateByKerberos_, ns1__authenticateByKerberosResponse &ns1__authenticateByKerberosResponse_)
+        { return this->authenticateByKerberos(NULL, NULL, ns1__authenticateByKerberos_, ns1__authenticateByKerberosResponse_); }
+        virtual int authenticateByKerberos(const char *soap_endpoint, const char *soap_action, ns1__authenticateByKerberos *ns1__authenticateByKerberos_, ns1__authenticateByKerberosResponse &ns1__authenticateByKerberosResponse_);
+        /// Web service operation 'reassignTask' (returns SOAP_OK or error code)
+        virtual int reassignTask(ns1__reassignTask *ns1__reassignTask_, ns1__reassignTaskResponse &ns1__reassignTaskResponse_)
+        { return this->reassignTask(NULL, NULL, ns1__reassignTask_, ns1__reassignTaskResponse_); }
+        virtual int reassignTask(const char *soap_endpoint, const char *soap_action, ns1__reassignTask *ns1__reassignTask_, ns1__reassignTaskResponse &ns1__reassignTaskResponse_);
+        /// Web service operation 'getMyTasks' (returns SOAP_OK or error code)
+        virtual int getMyTasks(ns1__getMyTasks *ns1__getMyTasks_, ns1__getMyTasksResponse &ns1__getMyTasksResponse_)
+        { return this->getMyTasks(NULL, NULL, ns1__getMyTasks_, ns1__getMyTasksResponse_); }
+        virtual int getMyTasks(const char *soap_endpoint, const char *soap_action, ns1__getMyTasks *ns1__getMyTasks_, ns1__getMyTasksResponse &ns1__getMyTasksResponse_);
+        /// Web service operation 'markTaskOpened' (returns SOAP_OK or error code)
+        virtual int markTaskOpened(ns1__markTaskOpened *ns1__markTaskOpened_, ns1__markTaskOpenedResponse &ns1__markTaskOpenedResponse_)
+        { return this->markTaskOpened(NULL, NULL, ns1__markTaskOpened_, ns1__markTaskOpenedResponse_); }
+        virtual int markTaskOpened(const char *soap_endpoint, const char *soap_action, ns1__markTaskOpened *ns1__markTaskOpened_, ns1__markTaskOpenedResponse &ns1__markTaskOpenedResponse_);
+        /// Web service operation 'assignTask' (returns SOAP_OK or error code)
+        virtual int assignTask(ns1__assignTask *ns1__assignTask_, ns1__assignTaskResponse &ns1__assignTaskResponse_)
+        { return this->assignTask(NULL, NULL, ns1__assignTask_, ns1__assignTaskResponse_); }
+        virtual int assignTask(const char *soap_endpoint, const char *soap_action, ns1__assignTask *ns1__assignTask_, ns1__assignTaskResponse &ns1__assignTaskResponse_);
+        /// Web service operation 'getTasks' (returns SOAP_OK or error code)
+        virtual int getTasks(ns1__getTasks *ns1__getTasks_, ns1__getTasksResponse &ns1__getTasksResponse_)
+        { return this->getTasks(NULL, NULL, ns1__getTasks_, ns1__getTasksResponse_); }
+        virtual int getTasks(const char *soap_endpoint, const char *soap_action, ns1__getTasks *ns1__getTasks_, ns1__getTasksResponse &ns1__getTasksResponse_);
+        /// Web service operation 'completeTaskWS' (returns SOAP_OK or error code)
+        virtual int completeTaskWS(ns1__completeTaskWS *ns1__completeTaskWS_, ns1__completeTaskWSResponse &ns1__completeTaskWSResponse_)
+        { return this->completeTaskWS(NULL, NULL, ns1__completeTaskWS_, ns1__completeTaskWSResponse_); }
+        virtual int completeTaskWS(const char *soap_endpoint, const char *soap_action, ns1__completeTaskWS *ns1__completeTaskWS_, ns1__completeTaskWSResponse &ns1__completeTaskWSResponse_);
+        /// Web service operation 'getProcessTasks' (returns SOAP_OK or error code)
+        virtual int getProcessTasks(ns1__getProcessTasks *ns1__getProcessTasks_, ns1__getProcessTasksResponse &ns1__getProcessTasksResponse_)
+        { return this->getProcessTasks(NULL, NULL, ns1__getProcessTasks_, ns1__getProcessTasksResponse_); }
+        virtual int getProcessTasks(const char *soap_endpoint, const char *soap_action, ns1__getProcessTasks *ns1__getProcessTasks_, ns1__getProcessTasksResponse &ns1__getProcessTasksResponse_);
+        /// Web service operation 'getTask' (returns SOAP_OK or error code)
+        virtual int getTask(ns1__getTask *ns1__getTask_, ns1__getTaskResponse &ns1__getTaskResponse_)
+        { return this->getTask(NULL, NULL, ns1__getTask_, ns1__getTaskResponse_); }
+        virtual int getTask(const char *soap_endpoint, const char *soap_action, ns1__getTask *ns1__getTask_, ns1__getTaskResponse &ns1__getTaskResponse_);
+        /// Web service operation 'reassignTasks' (returns SOAP_OK or error code)
+        virtual int reassignTasks(ns1__reassignTasks *ns1__reassignTasks_, ns1__reassignTasksResponse &ns1__reassignTasksResponse_)
+        { return this->reassignTasks(NULL, NULL, ns1__reassignTasks_, ns1__reassignTasksResponse_); }
+        virtual int reassignTasks(const char *soap_endpoint, const char *soap_action, ns1__reassignTasks *ns1__reassignTasks_, ns1__reassignTasksResponse &ns1__reassignTasksResponse_);
+    };
 #endif
